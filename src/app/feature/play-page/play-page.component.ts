@@ -1,12 +1,17 @@
 import {Component, ViewChild} from '@angular/core';
 import {ChessBoardComponent} from "../chess-board/chess-board.component";
+import { ChessWebApiService } from '../services/chess-web-api.service';
 
 @Component({
   selector: 'app-play-page',
   templateUrl: './play-page.component.html'
 })
 export class PlayPageComponent {
+  player: string = '';
+  constructor(private chessService: ChessWebApiService) {}
+
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
+
 
   resetBoard() {
     this.chessboard.resetBoard();
@@ -14,5 +19,11 @@ export class PlayPageComponent {
 
   undo() {
     this.chessboard.undoMove();
+  }
+
+  getPlayer() {
+    this.chessService.getPlayer('IT').then((data) =>  {
+      console.log(data.data.players[500])
+    });
   }
 }
