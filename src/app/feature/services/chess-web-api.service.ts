@@ -5,9 +5,9 @@ import { parse } from '@mliebelt/pgn-parser';
   providedIn: 'root'
 })
 export class ChessWebApiService {
-
   countryCode = 'IT';
   playUserName = '';
+  monthArchive = '';
   year = '';
   month = '';
   pgn = '';
@@ -17,57 +17,55 @@ export class ChessWebApiService {
   game: any = null;
   moveList: string[] = [];
   moves = '';
-  
+
   ChessWebAPI = require('chess-web-api');
   chessApiService = new this.ChessWebAPI({
     queue: true,
-});
+  });
 
-  async function getRandomPlayer(response: any, error: any): Promise<void> {
-    playUserName = await response.body.players[Math.floor(Math.random() * response.body.players.length)];
-    monthArchive = chessAPI.dispatch(chessAPI.getPlayerMonthlyArchives, getMonthArchive, [playUserName]);
+  async getRandomPlayer(response: any, error: any): Promise<void> {
+    this.playUserName = await response.body.players[Math.floor(Math.random() * response.body.players.length)];
+    this.monthArchive = this.chessApiService.dispatch(this.chessApiService.getPlayerMonthlyArchives, this.getMonthArchive, [this.playUserName]);
   }
 
-  async function getMonthArchive(response: any, error: any): Promise<void> {
-    monthArchive = await response.body.archives[Math.floor(Math.random() * response.body.archives.length)];
-    getMonthAndYear(monthArchive);
+  async getMonthArchive(response: any, error: any): Promise<void> {
+    this.monthArchive = await response.body.archives[Math.floor(Math.random() * response.body.archives.length)];
+    this.getMonthAndYear(this.monthArchive);
   }
 
-  async function getPGN(response: any, error: any): Promise<void> {
+  async getPGN(response: any, error: any): Promise<void> {
     const res = await response.body.games[0];
-    pgn = res.pgn;
-    game = await parse(pgn, { startRule: "game" });
-    getBlackElo(res);
-    getWhiteElo(res);
-    getTimeClass(res);
-
-    moveList = pgnToArray(game);
+    this.pgn = res.pgn;
+    this.game = parse(this.pgn, { startRule: "game" });
+    this.getBlackElo(res);
+    this.getWhiteElo(res);
+    this.getTimeClass(res);
+    this.pgnToArray(this.game);
   }
 
-  function pgnToArray(game: any): void {
+  pgnToArray(game: any): void {
     const arr = game.moves;
     for (const move of arr) {
-      moveList.push(move.notation.notation);
+      this.moveList.push(move.notation.notation);
     }
-    moves = moveList.toString();
+    this.moves = this.moveList.toString();
   }
 
-  function getMonthAndYear(archive: string): void {
+  getMonthAndYear(archive: string): void {
     const arr = archive.split("/");
-    year = arr[7];
-    month = arr[8];
+    this.year = arr[7];
+    this.month = arr[8];
   }
 
-  function getBlackElo(res: any): void {
-    blackElo = res.black.rating;
+  getBlackElo(res: any): void {
+    this.blackElo = res.black.rating;
   }
 
-  function getWhiteElo(res: any): void {
-    whiteElo = res.white.rating;
+  getWhiteElo(res: any): void {
+    this.whiteElo = res.white.rating;
   }
 
-  function getTimeClass(res: any): void {
-    timeClass = res.time_class;
+  getTimeClass(res: any): void {
+    this.timeClass = res.time_class;
   }
-
 }
