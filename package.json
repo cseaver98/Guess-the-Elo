@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^17.0.2",
     "@angular/router": "^17.0.2",
     "autoprefixer": "^10.4.16",
+    "chess-web-api": "^1.1.2",
     "heroicons": "^2.0.18",
     "ngx-chess-board": "^2.2.3",
     "postcss": "^8.4.31",
