@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {ChessBoardComponent} from "../chess-board/chess-board.component";
-import { ChessWebApiService } from '../services/chess-web-api.service';
+import {ChessWebApiService} from '../services/chess-web-api.service';
 
 @Component({
   selector: 'app-play-page',
@@ -8,10 +8,11 @@ import { ChessWebApiService } from '../services/chess-web-api.service';
 })
 export class PlayPageComponent {
   player: string = '';
-  constructor(private chessService: ChessWebApiService) {}
+
+  constructor(private chessService: ChessWebApiService) {
+  }
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
-
 
   resetBoard() {
     this.chessboard.resetBoard();
@@ -22,7 +23,7 @@ export class PlayPageComponent {
   }
 
   getPlayer() {
-    this.chessService.getPlayer('IT').then((data) =>  {
+    this.chessService.getPlayer('IT').then((data) => {
       console.log(data.data.players[500])
     });
   }
