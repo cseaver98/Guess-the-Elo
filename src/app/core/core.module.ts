@@ -3,14 +3,17 @@ import {CommonModule} from '@angular/common';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {RouterLink} from "@angular/router";
+import {FooterComponent} from "./footer/footer.component";
 
 @NgModule({
   declarations: [
     PageNotFoundComponent,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

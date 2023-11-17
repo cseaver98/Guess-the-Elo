@@ -1,4 +1,4 @@
-const countryCodes = Object.freeze([
+export enum CountryCodes {
   "AF",
   // "AL",
   // "DZ",
@@ -247,5 +247,4 @@ const countryCodes = Object.freeze([
   // "ZM",
   // "ZW",
   // "AX",
-])
-export {countryCodes};
+};

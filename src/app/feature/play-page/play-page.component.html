@@ -1,8 +1,5 @@
 <div class="flex flex-col">
-  <div class="flex">
-    <app-chess-board></app-chess-board>
-    <button class="reset-button-colors buttons" (click)="resetBoard()">Reset Button</button>
-  </div>
+  <app-chess-board></app-chess-board>
   <div class="flex">
     <button class="buttons w-[50px]" (click)="undo()">
       <img src="assets/arrow-left.svg" alt="Left Arrow"/>
@@ -12,7 +9,12 @@
     </button>
     <button class="buttons w-[50px]" (click)="getPlayer()">
       <img src="assets/arrow-right.svg" alt="Right Arrow"/>
-
+    </button>
+    <button class="buttons w-[50px] justify-end" (click)="reverse()">
+      <img src="assets/arrow-path-square.svg" alt="Revolving Square Arrows"/>
+    </button>
+    <button class="reset-button-colors buttons w-[50px] justify-end" (click)="resetBoard()">
+      Reset Button
     </button>
   </div>
 </div>

@@ -22,6 +22,10 @@ export class PlayPageComponent {
     this.chessboard.undoMove();
   }
 
+  reverse() {
+    this.chessboard.reverseBoard();
+  }
+
   getPlayer() {
     this.chessService.getPlayer('IT').then((data) => {
       console.log(data.data.players[500])
