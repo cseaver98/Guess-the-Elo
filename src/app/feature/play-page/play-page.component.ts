@@ -10,7 +10,7 @@ import {randomNumber} from "../../shared/utilities/random-number";
 })
 export class PlayPageComponent {
   player: string = '';
-
+  playerGamesUrl: string = '';
   constructor(private chessService: ChessWebApiService) {
   }
 
@@ -35,4 +35,17 @@ export class PlayPageComponent {
       this.player = data.data.players[number];
     });
   }
+
+  getPlayerGamesUrl() {
+    this.chessService.getPlayerArchives(this.player).then((data) => {
+      this.playerGamesUrl = data.data.archives[data.data.archives.length-1];
+    });
+  }
+
+  getPlayerGames() {
+    this.chessService.getPlayerGames(this.playerGamesUrl).then((data) => {
+      console.log(data);
+    });
+  }
 }
+
