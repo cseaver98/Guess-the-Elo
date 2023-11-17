@@ -3,6 +3,7 @@ import {ChessBoardComponent} from "../chess-board/chess-board.component";
 import {ChessWebApiService} from '../services/chess-web-api.service';
 import {COUNTRY_CODES} from "../../shared/utilities/global-variables/country-codes";
 import {randomNumber} from "../../shared/utilities/random-number";
+import { parse } from '@mliebelt/pgn-parser'
 
 @Component({
   selector: 'app-play-page',
@@ -11,6 +12,11 @@ import {randomNumber} from "../../shared/utilities/random-number";
 export class PlayPageComponent {
   player: string = '';
   playerGamesUrl: string = '';
+  blackElo: string = '';
+  whiteElo: string = '';
+  pgn: string = '';
+  moveList:any[] = [];
+
   constructor(private chessService: ChessWebApiService) {
   }
 
@@ -45,7 +51,21 @@ export class PlayPageComponent {
   getPlayerGames() {
     this.chessService.getPlayerGames(this.playerGamesUrl).then((data) => {
       console.log(data);
+      this.blackElo = data.data.games[data.data.games.length-1].black.rating;
+      this.whiteElo = data.data.games[data.data.games.length-1].white.rating;
+      this.pgn = data.data.games[data.data.games.length-1].pgn;
+      this.moveList = this.pgnToArray(parse(this.pgn, { startRule: "game" }));
+      console.log(this.moveList)
     });
+  }
+
+  pgnToArray(game:any) {
+    let arr = game.moves;
+    let moves = [];
+    for (const move of arr) {
+        moves.push(move.notation.notation);
+    }
+    return moves;
   }
 }
 
