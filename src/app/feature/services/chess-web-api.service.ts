@@ -7,7 +7,7 @@ export class ChessWebApiService {
 
   async getPlayer(countryCode: string): Promise<any> {
     try {
-      const response = await fetch('https://api.chess.com/pub/country/IT/players');
+      const response = await fetch('https://api.chess.com/pub/country/'+ countryCode +'/players');
       const data = await response.json();
       return {data, status: response.status};
     } catch (error) {
