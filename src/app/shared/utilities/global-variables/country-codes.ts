@@ -1,4 +1,4 @@
-export enum CountryCodes {
+export const COUNTRY_CODES : string[] = [
   "AF",
   "AL",
   "DZ",
@@ -247,4 +247,4 @@ export enum CountryCodes {
   "ZM",
   "ZW",
   "AX",
-}
+];
