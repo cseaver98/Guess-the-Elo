@@ -1,12 +1,10 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, HostListener, ViewChild} from '@angular/core';
 import {NgxChessBoardView} from 'ngx-chess-board';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {screenWidths} from "../../shared/constants/screen-widths";
-import {Subject, takeUntil} from "rxjs";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-chess-board',
-  templateUrl: './chess-board.component.html'
+  templateUrl: './chess-board.component.html',
 })
 export class ChessBoardComponent {
   @ViewChild('board', {static: false}) board!: NgxChessBoardView;
@@ -40,47 +38,20 @@ export class ChessBoardComponent {
     whitePawnUrl: 'assets/white-pawn.svg'
   };
 
-  componentSize: number = 400;
+  componentWidth: number = this.calculateWidth();
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.setComponentSize();
-    this.breakpointObserver.observe([
-      screenWidths.mobileS,
-      screenWidths.mobileM,
-      screenWidths.mobileL,
-      screenWidths.laptopXS,
-      screenWidths.laptopS,
-      screenWidths.laptopM,
-      screenWidths.laptopL,
-      screenWidths.laptopXL
-    ])
-      .pipe(takeUntil(this.destroy))
-      .subscribe(_ => {
-        this.setComponentSize();
-      });
+  @HostListener('window:resize')
+  onResize() {
+    this.componentWidth = this.calculateWidth();
   }
 
-  private setComponentSize(): void {
-    const screenWidth = window.innerWidth;
-    if (screenWidth <= 320) {
-      this.componentSize = 300;
-    }
-    if (screenWidth <= 375 && screenWidth >= 321) {
-      this.componentSize = 350;
-    }
-    if (screenWidth <= 425) {
-      this.componentSize = 600;
-    } else if (screenWidth <= 600) {
-      this.componentSize = 415;
-    } else if (screenWidth < 960) {
-      this.componentSize = 675;
-    } else if (screenWidth < 1280) {
-      this.componentSize = 1000;
-    } else if (screenWidth < 1920) {
-      this.componentSize = 1250;
-    } else {
-      this.componentSize = 1500;
-    }
+  private calculateWidth(): number {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const minSize = 300;
+    const maxSize = 1100;
+
+    return Math.max(minSize, Math.min(maxSize, Math.min(windowWidth, windowHeight) - 50)) - 25;
   }
 
   ngOnDestroy() {

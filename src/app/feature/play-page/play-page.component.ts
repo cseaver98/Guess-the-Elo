@@ -28,7 +28,7 @@ export class PlayPageComponent {
 
   getPlayer() {
     this.chessService.getPlayer('IT').then((data) => {
-      console.log(data.data.players[500])
+      this.player = data.data.players[500];
     });
   }
 }
