@@ -1,26 +1,21 @@
-import {Component, HostListener, ViewChild} from '@angular/core';
-import {NgxChessBoardView} from 'ngx-chess-board';
+import {Component, HostListener} from '@angular/core';
 import {Subject} from "rxjs";
+
+declare var ChessBoard: any;
 
 @Component({
   selector: 'app-chess-board',
   templateUrl: './chess-board.component.html',
 })
 export class ChessBoardComponent {
-  @ViewChild('board', {static: false}) board!: NgxChessBoardView;
-
   private destroy = new Subject<void>();
+  board: any;
 
-  resetBoard() {
-    this.board.reset();
-  }
-
-  undoMove() {
-    this.board.undo()
-  }
-
-  reverseBoard() {
-    this.board.reverse();
+  ngOnInit() {
+    this.board = ChessBoard('board', {
+      position: 'start',
+      draggable: true
+    });
   }
 
   pieceIcons = {

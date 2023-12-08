@@ -19,34 +19,32 @@ export class PlayPageComponent {
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
 
-  resetBoard() {
-    this.chessboard.resetBoard();
-  }
-
-  undo() {
-    this.chessboard.undoMove();
-  }
-
-  reverse() {
-    this.chessboard.reverseBoard();
+  ngOnInit() {
+    this.getPlayer().then(() => {
+      return this.getPlayerGamesUrl();
+    }).then(() => {
+      return this.getPlayerGames();
+    });
   }
 
   getPlayer() {
     let countryCode = COUNTRY_CODES[randomNumber(0, COUNTRY_CODES.length - 1)];
-    this.chessService.getPlayer(countryCode).then((data) => {
+    return this.chessService.getPlayer(countryCode).then((data) => {
       let number = randomNumber(0, data.data.players.length);
       this.player = data.data.players[number];
+
+      console.log(`inside inside player ${this.player}`)
     });
   }
 
   getPlayerGamesUrl() {
-    this.chessService.getPlayerArchives(this.player).then((data) => {
+    return this.chessService.getPlayerArchives(this.player).then((data) => {
       this.playerGamesUrl = data.data.archives[data.data.archives.length - 1];
     });
   }
 
   getPlayerGames() {
-    this.chessService.getPlayerGames(this.playerGamesUrl).then((data) => {
+    return this.chessService.getPlayerGames(this.playerGamesUrl).then((data) => {
       let currentGame = data.data.games[data.data.games.length - 1];
       this.game = {
         whiteUserName: currentGame.whiteUserName,
@@ -60,7 +58,6 @@ export class PlayPageComponent {
         timeClass: currentGame.timeClass,
         timeControl: currentGame.timeControl,
       }
-      console.log(this.game)
     });
   }
 

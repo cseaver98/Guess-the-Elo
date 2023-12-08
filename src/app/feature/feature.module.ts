@@ -4,7 +4,6 @@ import {HomePageComponent} from './home-page/home-page.component';
 import {PlayPageComponent} from './play-page/play-page.component';
 import {FeatureRoutingModule} from './feature-routing.module';
 import {ChessBoardComponent} from './chess-board/chess-board.component';
-import {NgxChessBoardModule} from "ngx-chess-board";
 
 @NgModule({
   declarations: [
@@ -14,8 +13,7 @@ import {NgxChessBoardModule} from "ngx-chess-board";
   ],
   imports: [
     CommonModule,
-    FeatureRoutingModule,
-    NgxChessBoardModule.forRoot()
+    FeatureRoutingModule
   ]
 })
 export class FeatureModule {
