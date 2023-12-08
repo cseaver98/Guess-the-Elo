@@ -27,18 +27,6 @@ export class PlayPageComponent {
     });
   }
 
-  resetBoard() {
-    this.chessboard.resetBoard();
-  }
-
-  undo() {
-    this.chessboard.undoMove();
-  }
-
-  reverse() {
-    this.chessboard.reverseBoard();
-  }
-
   getPlayer() {
     let countryCode = COUNTRY_CODES[randomNumber(0, COUNTRY_CODES.length - 1)];
     return this.chessService.getPlayer(countryCode).then((data) => {
