@@ -67,11 +67,15 @@ export class ChessBoardComponent {
     whitePawnUrl: 'assets/white-pawn.svg'
   };
 
-  componentWidth: number = this.calculateWidth();
+  componentWidth: number = 400;
 
   @HostListener('window:resize')
   onResize() {
-    this.componentWidth = this.calculateWidth();
+    this.componentWidth = 400;
+  }
+
+  get resized() {
+    return `w-[${this.componentWidth}px]`;
   }
 
   private calculateWidth(): number {
