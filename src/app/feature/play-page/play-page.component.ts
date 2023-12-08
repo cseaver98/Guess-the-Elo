@@ -43,6 +43,12 @@ export class PlayPageComponent {
     this.chessboard.undo();
   }
 
+  isVisible: boolean = false;
+
+  toggleVisibleElo() {
+    this.isVisible = !this.isVisible;
+  }
+
   getPlayer() {
     let countryCode = COUNTRY_CODES[randomNumber(0, COUNTRY_CODES.length - 1)];
     return this.chessService.getPlayer(countryCode).then((data) => {
