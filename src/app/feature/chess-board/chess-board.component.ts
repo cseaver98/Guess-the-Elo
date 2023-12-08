@@ -23,9 +23,11 @@ export class ChessBoardComponent {
   }
 
   move() {
-    let moveObject = this.game.move(this.moveList[this.i]);
-    this.board.move(moveObject.from + '-' + moveObject.to);
-    this.i++;
+    if (this.i < this.moveList.length) {
+      let moveObject = this.game.move(this.moveList[this.i]);
+      this.board.position(moveObject.after);
+      this.i++;
+    }
   }
 
   reset() {
@@ -41,7 +43,7 @@ export class ChessBoardComponent {
   undo() {
     let moveObject = this.game.undo();
     if (moveObject) {
-      this.board.move(moveObject.to + '-' + moveObject.from);
+      this.board.position(moveObject.before, true);
       this.i--;
     }
   }
