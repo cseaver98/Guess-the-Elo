@@ -27,6 +27,22 @@ export class PlayPageComponent {
     });
   }
 
+  move() {
+    this.chessboard.move();
+  }
+
+  reset() {
+    this.chessboard.reset();
+  }
+
+  flipBoard() {
+    this.chessboard.flipBoard();
+  }
+
+  undo() {
+    this.chessboard.undo();
+  }
+
   getPlayer() {
     let countryCode = COUNTRY_CODES[randomNumber(0, COUNTRY_CODES.length - 1)];
     return this.chessService.getPlayer(countryCode).then((data) => {
@@ -58,6 +74,7 @@ export class PlayPageComponent {
         timeClass: currentGame.timeClass,
         timeControl: currentGame.timeControl,
       }
+      this.chessboard.setMoveList(this.game.moveList);
     });
   }
 

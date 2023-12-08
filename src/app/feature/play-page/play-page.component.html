@@ -9,17 +9,17 @@
       Testing
     </div>
     <div class="p-4">
-      {{ player }}
+      {{ game?.moveList }}
     </div>
     <div class="flex bg-white rounded-b-lg p-4 justify-between">
       <button class="transparent-buttons w-12 h-12">
-        <img src="assets/arrow-left.svg" alt="Left Arrow"/>
+        <img src="assets/arrow-left.svg" alt="Left Arrow" (click)="undo()"/>
       </button>
       <button class="transparent-buttons w-12 h-12">
-        <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow"/>
+        <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="move()"/>
       </button>
       <button class="transparent-buttons w-12 h-12">
-        <img class="w-24 h-12" src="assets/arrow-path-square.svg" alt="Revolving Square Arrows"/>
+        <img class="w-24 h-12" src="assets/arrow-path-square.svg" alt="Revolving Square Arrows" (click)="flipBoard()"/>
       </button>
       <button class="transparent-buttons w-12 h-12">
         <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="getPlayer()"/>
@@ -30,7 +30,7 @@
       <button class="transparent-buttons w-12 h-12">
         <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="getPlayerGames()"/>
       </button>
-      <button class="text-[14px] leading-4 reset-button-colors buttons w-24 h-12 justify-end">
+      <button class="text-[14px] leading-4 reset-button-colors buttons w-24 h-12 justify-end" (click)="reset()">
         Reset Button
       </button>
     </div>

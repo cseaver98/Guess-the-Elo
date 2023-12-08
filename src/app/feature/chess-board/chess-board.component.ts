@@ -1,5 +1,6 @@
 import {Component, HostListener} from '@angular/core';
 import {Subject} from "rxjs";
+import {Chess} from 'chess.js';
 
 declare var ChessBoard: any;
 
@@ -10,12 +11,43 @@ declare var ChessBoard: any;
 export class ChessBoardComponent {
   private destroy = new Subject<void>();
   board: any;
+  game = new Chess();
+  moveList: string[] = [];
+  i: number = 0;
 
   ngOnInit() {
     this.board = ChessBoard('board', {
       position: 'start',
       draggable: true
     });
+  }
+
+  move() {
+    let moveObject = this.game.move(this.moveList[this.i]);
+    this.board.move(moveObject.from + '-' + moveObject.to);
+    this.i++;
+  }
+
+  reset() {
+    this.i = 0;
+    this.game.reset();
+    this.board.start();
+  }
+
+  flipBoard() {
+    this.board.flip();
+  }
+
+  undo() {
+    let moveObject = this.game.undo();
+    if (moveObject) {
+      this.board.move(moveObject.to + '-' + moveObject.from);
+      this.i--;
+    }
+  }
+
+  setMoveList(moveList: string[]) {
+    this.moveList = moveList;
   }
 
   pieceIcons = {
