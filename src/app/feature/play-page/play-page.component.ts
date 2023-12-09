@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {ChessBoardComponent} from "../chess-board/chess-board.component";
 import {ChessWebApiService} from '../services/chess-web-api.service';
 import {COUNTRY_CODES} from "../../shared/utilities/global-variables/country-codes";
@@ -10,16 +10,21 @@ import {Game} from "../model/game";
   selector: 'app-play-page',
   templateUrl: './play-page.component.html'
 })
-export class PlayPageComponent {
+export class PlayPageComponent implements OnInit {
   player: string = '';
   playerGamesUrl: string = '';
-  game?: Game;
+  gameData?: Game;
 
   constructor(private chessService: ChessWebApiService) {}
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
 
   ngOnInit() {
+    this.newGame();
+  }
+
+  newGame() {
+    this.reset();
     this.getPlayer().then(() => {
       return this.getPlayerGamesUrl();
     }).then(() => {
@@ -48,8 +53,6 @@ export class PlayPageComponent {
     return this.chessService.getPlayer(countryCode).then((data) => {
       let number = randomNumber(0, data.data.players.length);
       this.player = data.data.players[number];
-
-      console.log(`inside inside player ${this.player}`)
     });
   }
 
@@ -62,19 +65,20 @@ export class PlayPageComponent {
   getPlayerGames() {
     return this.chessService.getPlayerGames(this.playerGamesUrl).then((data) => {
       let currentGame = data.data.games[data.data.games.length - 1];
-      this.game = {
-        whiteUserName: currentGame.whiteUserName,
+      console.log(currentGame);
+      this.gameData = {
+        whiteUserName: currentGame.white.username,
         whiteElo: currentGame.white.rating,
-        blackUserName: currentGame.blackUserName,
+        blackUserName: currentGame.black.username,
         blackElo: currentGame.black.rating,
         gameUrl: currentGame.gameUrl,
         pgn: currentGame.pgn,
         moveList: this.pgnToArray(parse(currentGame.pgn, {startRule: "game"})),
         rules: currentGame.rules,
-        timeClass: currentGame.timeClass,
-        timeControl: currentGame.timeControl,
+        timeClass: currentGame.time_class,
+        timeControl: currentGame.time_control,
       }
-      this.chessboard.setMoveList(this.game.moveList);
+      this.chessboard.setMoveList(this.gameData.moveList);
     });
   }
 
@@ -85,5 +89,9 @@ export class PlayPageComponent {
       moves.push(move.notation.notation);
     }
     return moves;
+  }
+
+  getGameKeys(obj: Game): string[] {
+    return Object.keys(obj || {});
   }
 }

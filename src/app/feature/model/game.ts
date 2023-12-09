@@ -2,6 +2,7 @@ import {Rules} from "./rules";
 import {TimeClass} from "./time-class";
 
 export interface Game {
+  [key: string]: any;
   whiteUserName: string;
   whiteElo: string  ;
   blackUserName: string;
