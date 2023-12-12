@@ -1,0 +1,17 @@
+<div class="flex flex-col w-[400px] p-4 justify-between">
+  <h1 mat-dialog-title>Elo Guess</h1>
+  <div mat-dialog-content>
+    <div>Guessed elo: {{data.guessedElo}}</div>
+    <div>Actual elo: {{data.actualElo}}</div>
+    <div>Your Score: {{data.score}}</div>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      class="w-full text-[14px] leading-4 reset-button-colors buttons"
+    >
+      New Game
+    </button>
+  </div>
+</div>

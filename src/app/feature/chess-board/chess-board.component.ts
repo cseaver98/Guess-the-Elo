@@ -9,7 +9,7 @@ declare var ChessBoard: any;
   selector: 'app-chess-board',
   templateUrl: './chess-board.component.html',
 })
-export class ChessBoardComponent implements OnInit{
+export class ChessBoardComponent implements OnInit {
   private destroy = new Subject<void>();
   board: any;
   game = new Chess();
@@ -17,9 +17,6 @@ export class ChessBoardComponent implements OnInit{
   i: number = 0;
   @Input() gameData?: Game;
 
-  constructor() {
-
-  }
 
   ngOnInit() {
     this.board = ChessBoard('board', {

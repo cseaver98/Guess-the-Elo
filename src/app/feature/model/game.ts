@@ -4,9 +4,9 @@ import {TimeClass} from "./time-class";
 export interface Game {
   [key: string]: any;
   whiteUserName: string;
-  whiteElo: string  ;
+  whiteElo: number;
   blackUserName: string;
-  blackElo: string;
+  blackElo: number;
   gameUrl: string;
   pgn: string;
   moveList: string[];

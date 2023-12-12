@@ -1,33 +1,42 @@
 <div class="flex relative gap-4 m-3">
-  <app-chess-board #chessboard [gameData]="gameData"></app-chess-board>
+  <app-chess-board [gameData]="gameData"></app-chess-board>
   <div
     class="flex flex-col w-full rounded-lg bg-gray-400 gap-4 justify-between border border-black">
     <div class="bg-gray-600 rounded-t-lg p-4">
       Testing
     </div>
     <div class="break-all p-4">
-      {{ game?.moveList }}
+      {{ gameData?.moveList }}
     </div>
-    <div class="flex p-4">
-      Elo Guess:
-      <input
-        type="text"
-      />
+    <div class="flex flex-col p-4">
+      <div class="flex justify-between">
+        <label id="slider-label">Elo Guess</label>
+        <label>{{slider.value}}</label>
+      </div>
+      <div class="flex justify-between">
+        <mat-slider
+          class="flex-grow"
+          [max]="3500"
+          [min]="100"
+          [step]="50">
+          <input matSliderThumb [formControl]="eloGuess" #slider>
+        </mat-slider>
+        <button mat-button class="reset-button-colors buttons w-24 h-12" [disabled]="!eloGuess.valid" (click)="openDialog()">
+          Submit
+        </button>
+      </div>
     </div>
     <div class="flex bg-white rounded-b-lg p-4 justify-between">
-      <button class="transparent-buttons w-12 h-12">
-        <img src="assets/arrow-left.svg" alt="Left Arrow" (click)="undo()"/>
+      <button mat-button class="transparent-buttons">
+        <img class="w-12 h-12" src="assets/arrow-left.svg" alt="Left Arrow" (click)="undo()"/>
       </button>
-      <button class="transparent-buttons w-12 h-12">
-        <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="move()"/>
+      <button mat-button class="transparent-buttons">
+        <img class="w-12 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="move()"/>
       </button>
-      <button class="transparent-buttons w-12 h-12">
-        <img class="w-24 h-12" src="assets/arrow-path-square.svg" alt="Revolving Square Arrows" (click)="flipBoard()"/>
+      <button mat-button class="transparent-buttons">
+        <img class="w-12 h-24" src="assets/arrow-path-square.svg" alt="Revolving Square Arrows" (click)="flipBoard()"/>
       </button>
-      <button class="text-[14px] leading-4 reset-button-colors buttons w-24 h-12" (click)="newGame()">
-        New Game
-      </button>
-      <button class="text-[14px] leading-4 reset-button-colors buttons w-24 h-12 justify-end" (click)="reset()">
+      <button mat-button class="text-[14px] leading-4 reset-button-colors buttons w-24 h-24" (click)="reset()">
         Reset Button
       </button>
     </div>
