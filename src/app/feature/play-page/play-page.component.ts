@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {ChessBoardComponent} from "../chess-board/chess-board.component";
 import {ChessWebApiService} from '../services/chess-web-api.service';
 import {COUNTRY_CODES} from "../../shared/utilities/global-variables/country-codes";
@@ -29,6 +29,15 @@ export class PlayPageComponent implements OnInit {
 
   ngOnInit() {
     this.newGame();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') {
+      this.undo();
+    } else if (event.key === 'ArrowRight') {
+      this.move();
+    }
   }
 
   newGame() {
@@ -99,7 +108,6 @@ export class PlayPageComponent implements OnInit {
     let score: number | null = null;
     if (this.eloGuess.value != null) {
       score = Math.ceil((this.eloGuess.value / (this.averageElo ?? 0)) * 100);
-      console.log(this.eloGuess.value)
     }
 
     const dialogRef = this.dialog.open(PopupComponent, {
