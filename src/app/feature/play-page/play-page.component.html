@@ -23,8 +23,11 @@
         >
           <input matSliderThumb [formControl]="eloGuess" #slider>
         </mat-slider>
-        <button mat-button class="reset-button-colors buttons w-24 h-12" [disabled]="!eloGuess.valid" (click)="openDialog()">
+        <button *ngIf="!disableBar" mat-button class="reset-button-colors buttons w-24 h-12" [disabled]="!eloGuess.valid" (click)="openDialog()">
           Submit
+        </button>
+        <button *ngIf="disableBar" mat-button class="reset-button-colors buttons w-24 h-12" [disabled]="!eloGuess.valid" (click)="newGame()">
+          New Game
         </button>
       </div>
     </div>

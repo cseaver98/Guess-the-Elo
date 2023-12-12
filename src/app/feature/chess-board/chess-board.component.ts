@@ -25,10 +25,6 @@ export class ChessBoardComponent implements OnInit {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-  }
-
   move() {
     if (this.i < this.moveList.length) {
       let moveObject = this.game.move(this.moveList[this.i]);

@@ -1,5 +1,6 @@
 export interface PopupScore {
   guessedElo: number,
   actualElo: number,
-  score: string
+  overallScore: number,
+  currentGameScore: number
 }

@@ -18,6 +18,8 @@ export class PlayPageComponent implements OnInit {
   playerGamesUrl: string = '';
   gameData?: Game;
   eloGuess: FormControl<number | null> = new FormControl(100);
+  currentGameScore: number = 0;
+  overallScore: number = 0;
   averageElo: number | null = null;
   disableBar: boolean = false;
 
@@ -42,6 +44,7 @@ export class PlayPageComponent implements OnInit {
   }
 
   newGame() {
+    this.disableBar = false;
     this.getPlayer().then(() => {
       return this.getPlayerGamesUrl();
     }).then(() => {
@@ -106,18 +109,17 @@ export class PlayPageComponent implements OnInit {
   }
 
   openDialog(): void {
-    let score: number | null = null;
     if (this.eloGuess.value != null) {
-      score = Math.ceil((Math.min(this.eloGuess.value, (this.averageElo ?? 0)) / Math.max(this.eloGuess.value, (this.averageElo ?? 0))) * 100);
+      this.currentGameScore = Math.ceil((Math.min(this.eloGuess.value, (this.averageElo ?? 0)) / Math.max(this.eloGuess.value, (this.averageElo ?? 0))) * 100);
+      this.overallScore += this.currentGameScore;
     }
 
     const dialogRef = this.dialog.open(PopupComponent, {
-      data: {guessedElo: this.eloGuess.value, actualElo: this.averageElo, score: score},
+      data: {guessedElo: this.eloGuess.value, actualElo: this.averageElo, currentGameScore: this.currentGameScore, overallScore: this.overallScore},
     });
 
     dialogRef.afterClosed().subscribe((value) => {
       if (value) {
-        this.disableBar = false;
         this.reset();
         this.eloGuess.setValue(100);
         this.newGame();
