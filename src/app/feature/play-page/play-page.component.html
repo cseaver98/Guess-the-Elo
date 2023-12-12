@@ -1,5 +1,5 @@
 <div class="flex relative gap-4 m-3">
-  <app-chess-board></app-chess-board>
+  <app-chess-board #chessboard [gameData]="gameData"></app-chess-board>
   <div
     class="flex flex-col w-full rounded-lg bg-gray-400 gap-4 justify-between border border-black">
     <div class="bg-gray-600 rounded-t-lg p-4">
@@ -24,14 +24,8 @@
       <button class="transparent-buttons w-12 h-12">
         <img class="w-24 h-12" src="assets/arrow-path-square.svg" alt="Revolving Square Arrows" (click)="flipBoard()"/>
       </button>
-      <button class="transparent-buttons w-12 h-12">
-        <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="getPlayer()"/>
-      </button>
-      <button class="transparent-buttons w-12 h-12">
-        <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="getPlayerGamesUrl()"/>
-      </button>
-      <button class="transparent-buttons w-12 h-12">
-        <img class="w-24 h-12" src="assets/arrow-right.svg" alt="Right Arrow" (click)="getPlayerGames()"/>
+      <button class="text-[14px] leading-4 reset-button-colors buttons w-24 h-12" (click)="newGame()">
+        New Game
       </button>
       <button class="text-[14px] leading-4 reset-button-colors buttons w-24 h-12 justify-end" (click)="reset()">
         Reset Button

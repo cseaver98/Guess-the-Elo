@@ -1,6 +1,7 @@
-import {Component, HostListener} from '@angular/core';
+import {Input, Component, HostListener, SimpleChanges, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import {Chess} from 'chess.js';
+import {Game} from "../model/game";
 
 declare var ChessBoard: any;
 
@@ -8,12 +9,17 @@ declare var ChessBoard: any;
   selector: 'app-chess-board',
   templateUrl: './chess-board.component.html',
 })
-export class ChessBoardComponent {
+export class ChessBoardComponent implements OnInit{
   private destroy = new Subject<void>();
   board: any;
   game = new Chess();
   moveList: string[] = [];
   i: number = 0;
+  @Input() gameData?: Game;
+
+  constructor() {
+
+  }
 
   ngOnInit() {
     this.board = ChessBoard('board', {
@@ -22,10 +28,16 @@ export class ChessBoardComponent {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
+
   move() {
-    let moveObject = this.game.move(this.moveList[this.i]);
-    this.board.move(moveObject.from + '-' + moveObject.to);
-    this.i++;
+    if (this.i < this.moveList.length) {
+      let moveObject = this.game.move(this.moveList[this.i]);
+      this.board.position(moveObject.after);
+      this.i++;
+    }
   }
 
   reset() {
@@ -41,7 +53,7 @@ export class ChessBoardComponent {
   undo() {
     let moveObject = this.game.undo();
     if (moveObject) {
-      this.board.move(moveObject.to + '-' + moveObject.from);
+      this.board.position(moveObject.before, true);
       this.i--;
     }
   }
