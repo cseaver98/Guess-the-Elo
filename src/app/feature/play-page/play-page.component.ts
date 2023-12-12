@@ -5,6 +5,7 @@ import {COUNTRY_CODES} from "../../shared/utilities/global-variables/country-cod
 import {randomNumber} from "../../shared/utilities/random-number";
 import {parse} from '@mliebelt/pgn-parser'
 import {Game} from "../model/game";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-play-page',
@@ -27,6 +28,10 @@ export class PlayPageComponent {
     });
   }
 
+  eloGuess: FormControl<string> = new FormControl<string>({
+    eloText: ''
+  });
+
   move() {
     this.chessboard.move();
   }
@@ -41,12 +46,6 @@ export class PlayPageComponent {
 
   undo() {
     this.chessboard.undo();
-  }
-
-  isVisible: boolean = false;
-
-  toggleVisibleElo() {
-    this.isVisible = !this.isVisible;
   }
 
   getPlayer() {
