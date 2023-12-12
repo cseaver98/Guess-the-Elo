@@ -18,7 +18,9 @@
           class="flex-grow"
           [max]="3500"
           [min]="100"
-          [step]="50">
+          [step]="50"
+          [disabled]="disableBar"
+        >
           <input matSliderThumb [formControl]="eloGuess" #slider>
         </mat-slider>
         <button mat-button class="reset-button-colors buttons w-24 h-12" [disabled]="!eloGuess.valid" (click)="openDialog()">

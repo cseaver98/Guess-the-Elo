@@ -19,6 +19,7 @@ export class PlayPageComponent implements OnInit {
   gameData?: Game;
   eloGuess: FormControl<number | null> = new FormControl(100);
   averageElo: number | null = null;
+  disableBar: boolean = false;
 
   constructor(
     private chessService: ChessWebApiService,
@@ -107,7 +108,7 @@ export class PlayPageComponent implements OnInit {
   openDialog(): void {
     let score: number | null = null;
     if (this.eloGuess.value != null) {
-      score = Math.ceil((this.eloGuess.value / (this.averageElo ?? 0)) * 100);
+      score = Math.ceil((Math.min(this.eloGuess.value, (this.averageElo ?? 0)) / Math.max(this.eloGuess.value, (this.averageElo ?? 0))) * 100);
     }
 
     const dialogRef = this.dialog.open(PopupComponent, {
@@ -116,9 +117,12 @@ export class PlayPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((value) => {
       if (value) {
+        this.disableBar = false;
         this.reset();
         this.eloGuess.setValue(100);
         this.newGame();
+      } else {
+        this.disableBar = true;
       }
     });
   }
