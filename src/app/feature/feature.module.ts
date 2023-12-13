@@ -7,19 +7,21 @@ import {ChessBoardComponent} from './chess-board/chess-board.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatButtonModule} from "@angular/material/button";
+import {EvaluationBarComponent } from '../core/evaluation-bar/evaluation-bar.component';
 
 @NgModule({
   declarations: [
     HomePageComponent,
     PlayPageComponent,
-    ChessBoardComponent
+    ChessBoardComponent,
   ],
   imports: [
     CommonModule,
     FeatureRoutingModule,
     ReactiveFormsModule,
     MatSliderModule,
-    MatButtonModule
+    MatButtonModule,
+    EvaluationBarComponent,
   ]
 })
 export class FeatureModule {
