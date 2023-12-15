@@ -3,11 +3,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {PlayPageComponent} from './play-page/play-page.component';
 
 export const featureRoutes: Routes = [
-  {path: 'play-page', component: PlayPageComponent},
+  {path: '', component: PlayPageComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(featureRoutes)],
+  imports: [RouterModule.forChild(featureRoutes)],
   exports: [RouterModule]
 })
 export class FeatureRoutingModule {

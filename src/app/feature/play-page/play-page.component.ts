@@ -5,7 +5,7 @@ import {COUNTRY_CODES} from "../../shared/utilities/global-variables/country-cod
 import {randomNumber} from "../../shared/utilities/random-number";
 import {parse} from '@mliebelt/pgn-parser'
 import {Game} from "../model/game";
-import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {PopupComponent} from "../../core/popup/popup.component";
 import {MatDialog} from "@angular/material/dialog";
 

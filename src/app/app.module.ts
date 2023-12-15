@@ -6,15 +6,16 @@ import {FeatureModule} from './feature/feature.module';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HomePageComponent} from "./feature/home-page/home-page.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FeatureModule,
     SharedModule,
     CoreModule,
     BrowserAnimationsModule
