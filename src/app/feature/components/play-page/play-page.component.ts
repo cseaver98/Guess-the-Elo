@@ -1,14 +1,13 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {ChessBoardComponent} from "../chess-board/chess-board.component";
 import {ChessWebApiService} from "../../../core/services/chess-web-api.service";
 import {COUNTRY_CODES} from "../../../core/constants/country-codes";
 import {randomNumber} from "../../../core/util/random-number";
 import {parse} from '@mliebelt/pgn-parser'
-import {Game} from "../../model/game";
+import {Game} from "../../models/game";
 import {FormControl} from "@angular/forms";
 import {PopupComponent} from "../../../shared/components/popup/popup.component";
 import {MatDialog} from "@angular/material/dialog";
-import {domFocused} from "../../../core/util/dom-focused";
 
 @Component({
   selector: 'app-play-page',
@@ -31,6 +30,7 @@ export class PlayPageComponent implements OnInit {
   }
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
+  @ViewChild('slider') slideBar!: ElementRef;
 
   ngOnInit() {
     this.newGame();
@@ -38,7 +38,7 @@ export class PlayPageComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    if (!domFocused('componentA')) {
+    if (!this.isSlideBarFocused()) {
       if (event.key === 'ArrowLeft') {
         this.undo();
       } else if (event.key === 'ArrowRight') {
@@ -136,5 +136,9 @@ export class PlayPageComponent implements OnInit {
         this.disableBar = true;
       }
     });
+  }
+
+  isSlideBarFocused(): boolean {
+    return this.slideBar.nativeElement === document.activeElement;
   }
 }
