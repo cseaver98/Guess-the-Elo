@@ -1,1 +1,1 @@
-export type TimeClass = "daily" | "rapid" | "blitz" | "bullet";
+export type TimeClass = 'daily' | 'rapid' | 'blitz' | 'bullet';

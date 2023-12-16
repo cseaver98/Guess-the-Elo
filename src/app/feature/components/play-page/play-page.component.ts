@@ -1,17 +1,23 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {ChessBoardComponent} from "../chess-board/chess-board.component";
-import {ChessWebApiService} from "../../../core/services/chess-web-api.service";
-import {COUNTRY_CODES} from "../../../core/constants/country-codes";
-import {randomNumber} from "../../../core/util/random-number";
-import {parse} from '@mliebelt/pgn-parser'
-import {Game} from "../../models/game";
-import {FormControl} from "@angular/forms";
-import {PopupComponent} from "../../../shared/components/popup/popup.component";
-import {MatDialog} from "@angular/material/dialog";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { ChessBoardComponent } from '../chess-board/chess-board.component';
+import { ChessWebApiService } from '../../../core/services/chess-web-api.service';
+import { COUNTRY_CODES } from '../../../core/constants/country-codes';
+import { randomNumber } from '../../../core/util/random-number';
+import { parse } from '@mliebelt/pgn-parser';
+import { Game } from '../../models/game';
+import { FormControl } from '@angular/forms';
+import { PopupComponent } from '../../../shared/components/popup/popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-play-page',
-  templateUrl: './play-page.component.html'
+  templateUrl: './play-page.component.html',
 })
 export class PlayPageComponent implements OnInit {
   player: string = '';
@@ -25,9 +31,8 @@ export class PlayPageComponent implements OnInit {
 
   constructor(
     private chessService: ChessWebApiService,
-    public dialog: MatDialog
-  ) {
-  }
+    public dialog: MatDialog,
+  ) {}
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
   @ViewChild('slider') slideBar!: ElementRef;
@@ -49,11 +54,13 @@ export class PlayPageComponent implements OnInit {
 
   newGame() {
     this.disableBar = false;
-    this.getPlayer().then(() => {
-      return this.getPlayerGamesUrl();
-    }).then(() => {
-      return this.getPlayerGames();
-    });
+    this.getPlayer()
+      .then(() => {
+        return this.getPlayerGamesUrl();
+      })
+      .then(() => {
+        return this.getPlayerGames();
+      });
   }
 
   move() {
@@ -94,13 +101,15 @@ export class PlayPageComponent implements OnInit {
       blackElo: currentGame.black.rating,
       gameUrl: currentGame.gameUrl,
       pgn: currentGame.pgn,
-      moveList: this.pgnToArray(parse(currentGame.pgn, {startRule: "game"})),
+      moveList: this.pgnToArray(parse(currentGame.pgn, { startRule: 'game' })),
       rules: currentGame.rules,
       timeClass: currentGame.time_class,
       timeControl: currentGame.time_control,
     };
     this.chessboard.setMoveList(this.gameData.moveList);
-    this.averageElo = Math.floor((this.gameData?.whiteElo! + this.gameData?.blackElo!) / 2);
+    this.averageElo = Math.floor(
+      (this.gameData?.whiteElo! + this.gameData?.blackElo!) / 2,
+    );
   }
 
   pgnToArray(game: any) {
@@ -114,7 +123,11 @@ export class PlayPageComponent implements OnInit {
 
   openDialog(): void {
     if (this.eloGuess.value != null) {
-      this.currentGameScore = Math.ceil((Math.min(this.eloGuess.value, (this.averageElo ?? 0)) / Math.max(this.eloGuess.value, (this.averageElo ?? 0))) * 100);
+      this.currentGameScore = Math.ceil(
+        (Math.min(this.eloGuess.value, this.averageElo ?? 0) /
+          Math.max(this.eloGuess.value, this.averageElo ?? 0)) *
+          100,
+      );
       this.overallScore += this.currentGameScore;
     }
 
@@ -123,7 +136,7 @@ export class PlayPageComponent implements OnInit {
         guessedElo: this.eloGuess.value,
         actualElo: this.averageElo,
         currentGameScore: this.currentGameScore,
-        overallScore: this.overallScore
+        overallScore: this.overallScore,
       },
     });
 

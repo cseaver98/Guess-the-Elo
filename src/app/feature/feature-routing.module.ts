@@ -1,14 +1,13 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {PlayPageComponent} from "./components/play-page/play-page.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PlayPageComponent } from './components/play-page/play-page.component';
 
 export const featureRoutes: Routes = [
-  {path: '', component: PlayPageComponent},
+  { path: '', component: PlayPageComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(featureRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class FeatureRoutingModule {
-}
+export class FeatureRoutingModule {}

@@ -1,5 +1,5 @@
-import {Rules} from "./rules";
-import {TimeClass} from "./time-class";
+import { Rules } from './rules';
+import { TimeClass } from './time-class';
 
 export interface Game {
   [key: string]: any;
