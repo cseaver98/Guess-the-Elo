@@ -1,7 +1,7 @@
-import {Input, Component, HostListener, SimpleChanges, OnInit} from '@angular/core';
+import {Input, Component, HostListener, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import {Chess} from 'chess.js';
-import {Game} from "../model/game";
+import {Game} from "../../model/game";
 
 declare var ChessBoard: any;
 
@@ -16,7 +16,6 @@ export class ChessBoardComponent implements OnInit {
   moveList: string[] = [];
   i: number = 0;
   @Input() gameData?: Game;
-
 
   ngOnInit() {
     this.board = ChessBoard('board', {
