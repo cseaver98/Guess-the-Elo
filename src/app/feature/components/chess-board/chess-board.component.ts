@@ -1,7 +1,7 @@
 import {Input, Component, HostListener, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
 import {Chess} from 'chess.js';
-import {Game} from "../../model/game";
+import {Game} from "../../models/game";
 
 declare var ChessBoard: any;
 

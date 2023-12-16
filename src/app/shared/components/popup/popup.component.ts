@@ -3,7 +3,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialogModule,
 } from "@angular/material/dialog";
-import {PopupScore} from "../../../core/model/popup-score";
+import {PopupScore} from "../../../core/models/popup-score";
 import {MatButtonModule} from "@angular/material/button";
 
 @Component({
