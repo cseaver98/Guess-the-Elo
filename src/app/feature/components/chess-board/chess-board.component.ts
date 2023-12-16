@@ -1,7 +1,8 @@
-import {Input, Component, HostListener, OnInit} from '@angular/core';
-import {Subject} from "rxjs";
-import {Chess} from 'chess.js';
-import {Game} from "../../models/game";
+import { Input, Component, HostListener, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Chess } from 'chess.js';
+import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
+import { Game } from '../../models/game';
 
 declare var ChessBoard: any;
 
@@ -17,10 +18,12 @@ export class ChessBoardComponent implements OnInit {
   i: number = 0;
   @Input() gameData?: Game;
 
+  constructor(private stockfishService: StockfishEvaluationApiService) {}
+
   ngOnInit() {
     this.board = ChessBoard('board', {
       position: 'start',
-      draggable: true
+      draggable: true,
     });
   }
 
@@ -28,6 +31,15 @@ export class ChessBoardComponent implements OnInit {
     if (this.i < this.moveList.length) {
       let moveObject = this.game.move(this.moveList[this.i]);
       this.board.position(moveObject.after);
+      console.log(moveObject.after);
+      this.stockfishService
+        .getEvaluation(moveObject.after)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       this.i++;
     }
   }
@@ -66,7 +78,7 @@ export class ChessBoardComponent implements OnInit {
     whiteKnightUrl: 'assets/white-knight.svg',
     whiteRookUrl: 'assets/white-rook.svg',
     whiteQueenUrl: 'assets/white-queen.svg',
-    whitePawnUrl: 'assets/white-pawn.svg'
+    whitePawnUrl: 'assets/white-pawn.svg',
   };
 
   componentWidth: number = 400;
@@ -86,7 +98,12 @@ export class ChessBoardComponent implements OnInit {
     const minSize = 300;
     const maxSize = 1100;
 
-    return Math.max(minSize, Math.min(maxSize, Math.min(windowWidth, windowHeight) - 50)) - 25;
+    return (
+      Math.max(
+        minSize,
+        Math.min(maxSize, Math.min(windowWidth, windowHeight) - 50),
+      ) - 25
+    );
   }
 
   ngOnDestroy() {
