@@ -1,12 +1,12 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {ChessBoardComponent} from "../chess-board/chess-board.component";
-import {ChessWebApiService} from '../services/chess-web-api.service';
-import {COUNTRY_CODES} from "../../shared/utilities/global-variables/country-codes";
-import {randomNumber} from "../../shared/utilities/random-number";
+import {ChessWebApiService} from "../../../core/services/chess-web-api.service";
+import {COUNTRY_CODES} from "../../../core/constants/country-codes";
+import {randomNumber} from "../../../core/util/random-number";
 import {parse} from '@mliebelt/pgn-parser'
-import {Game} from "../model/game";
-import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
-import {PopupComponent} from "../../core/popup/popup.component";
+import {Game} from "../../models/game";
+import {FormControl} from "@angular/forms";
+import {PopupComponent} from "../../../shared/components/popup/popup.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -26,9 +26,11 @@ export class PlayPageComponent implements OnInit {
   constructor(
     private chessService: ChessWebApiService,
     public dialog: MatDialog
-  ) {}
+  ) {
+  }
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
+  @ViewChild('slider') slideBar!: ElementRef;
 
   ngOnInit() {
     this.newGame();
@@ -36,10 +38,12 @@ export class PlayPageComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'ArrowLeft') {
-      this.undo();
-    } else if (event.key === 'ArrowRight') {
-      this.move();
+    if (!this.isSlideBarFocused()) {
+      if (event.key === 'ArrowLeft') {
+        this.undo();
+      } else if (event.key === 'ArrowRight') {
+        this.move();
+      }
     }
   }
 
@@ -115,7 +119,12 @@ export class PlayPageComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open(PopupComponent, {
-      data: {guessedElo: this.eloGuess.value, actualElo: this.averageElo, currentGameScore: this.currentGameScore, overallScore: this.overallScore},
+      data: {
+        guessedElo: this.eloGuess.value,
+        actualElo: this.averageElo,
+        currentGameScore: this.currentGameScore,
+        overallScore: this.overallScore
+      },
     });
 
     dialogRef.afterClosed().subscribe((value) => {
@@ -127,5 +136,9 @@ export class PlayPageComponent implements OnInit {
         this.disableBar = true;
       }
     });
+  }
+
+  isSlideBarFocused(): boolean {
+    return this.slideBar.nativeElement === document.activeElement;
   }
 }

@@ -1,10 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {PopupComponent} from "./components/popup/popup.component";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    PopupComponent
+  ],
+  exports: [
+    PopupComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

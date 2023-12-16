@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {HomePageComponent} from './home-page/home-page.component';
-import {PlayPageComponent} from './play-page/play-page.component';
+import {PlayPageComponent} from "./components/play-page/play-page.component";
 import {FeatureRoutingModule} from './feature-routing.module';
-import {ChessBoardComponent} from './chess-board/chess-board.component';
+import {ChessBoardComponent} from "./components/chess-board/chess-board.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatButtonModule} from "@angular/material/button";
@@ -11,7 +10,6 @@ import {EvaluationBarComponent } from '../core/evaluation-bar/evaluation-bar.com
 
 @NgModule({
   declarations: [
-    HomePageComponent,
     PlayPageComponent,
     ChessBoardComponent,
   ],
