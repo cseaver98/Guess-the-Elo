@@ -6,7 +6,7 @@ import { ChessBoardComponent } from './components/chess-board/chess-board.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
-import { EvaluationBarComponent } from '../core/evaluation-bar/evaluation-bar.component';
+import { EvaluationBarComponent } from './components/evaluation-bar/evaluation-bar.component';
 
 @NgModule({
   declarations: [PlayPageComponent, ChessBoardComponent],

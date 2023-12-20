@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PopupComponent } from './components/popup/popup.component';
+import { PopupComponent } from '../feature/components/popup/popup.component';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,

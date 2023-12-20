@@ -12,7 +12,7 @@ import { randomNumber } from '../../../core/util/random-number';
 import { parse } from '@mliebelt/pgn-parser';
 import { Game } from '../../models/game';
 import { FormControl } from '@angular/forms';
-import { PopupComponent } from '../../../shared/components/popup/popup.component';
+import { PopupComponent } from '../popup/popup.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
