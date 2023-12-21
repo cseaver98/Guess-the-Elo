@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
 
 /**
  * @title Determinate progress-bar
@@ -10,16 +11,46 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   standalone: true,
 })
 export class EvaluationBarComponent {
-  @Input()
-  evaluation: number = 0;
 
-  cap: number = 5;
+  constructor(private stockfishService: StockfishEvaluationApiService) {}
 
-  protected percentage: number =
-    ((this.getPercentage(this.evaluation) + this.cap) / (this.cap * 2)) * 100;
+  private cap: number = 5;
 
-  getPercentage(val: number): number {
+  protected percentage: number = 0;
+
+  setPercentage(evaluation: number) {
+    console.log(evaluation)
+    this.percentage = ((this.limitPercentage(evaluation) + this.cap) / (this.cap * 2)) * 100;
+  }
+
+  limitPercentage(val: number): number {
     val = val * -1;
     return Math.min(Math.max(val, -1 * this.cap), this.cap);
+  }
+
+  async setEvaluation(fen: string) {
+    console.log(fen)
+    const result = await this.stockfishService.getEvaluation(fen);
+    console.log(result)
+    const parsedResult = this.parseEvaluation(result.data.data)
+    if (parsedResult) {
+      this.setPercentage(parsedResult);
+    }
+    else {
+      this.setPercentage(0);
+    }
+  } 
+
+  parseEvaluation(result: string) {
+    const regexPattern = /-?\d+\.\d+/;
+
+    const match = result.match(regexPattern);
+
+    if (match && match.length > 0) {
+      const extractedNumber = parseFloat(match[0]);
+      return extractedNumber;
+    }
+  
+    return null;
   }
 }

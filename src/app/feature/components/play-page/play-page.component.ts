@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
+import { EvaluationBarComponent } from '../evaluation-bar/evaluation-bar.component';
 
 @Component({
   selector: 'app-play-page',
@@ -41,10 +42,10 @@ export class PlayPageComponent implements OnInit {
   overallScore: number = 0;
   averageElo: number | null = null;
   disableBar: boolean = false;
-
   constructor(
     private chessService: ChessWebApiService,
     public dialog: MatDialog,
+    private evaluationBar: EvaluationBarComponent
   ) {}
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
@@ -63,7 +64,7 @@ export class PlayPageComponent implements OnInit {
         this.move();
       }
     }
-  }
+  } 
 
   newGame() {
     this.disableBar = false;
@@ -77,7 +78,9 @@ export class PlayPageComponent implements OnInit {
   }
 
   move() {
-    this.chessboard.move();
+    let fen: string = this.chessboard.move();
+    console.log(fen)
+    this.evaluationBar.setEvaluation(fen);
   }
 
   reset() {

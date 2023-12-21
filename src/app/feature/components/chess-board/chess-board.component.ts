@@ -28,8 +28,6 @@ export class ChessBoardComponent implements OnInit {
   i: number = 0;
   @Input() gameData?: Game;
 
-  constructor(private stockfishService: StockfishEvaluationApiService) {}
-
   ngOnInit() {
     this.board = ChessBoard('board', {
       position: 'start',
@@ -37,21 +35,14 @@ export class ChessBoardComponent implements OnInit {
     });
   }
 
-  move() {
+  move(): string {
     if (this.i < this.moveList.length) {
       let moveObject = this.game.move(this.moveList[this.i]);
       this.board.position(moveObject.after);
-      console.log(moveObject.after);
-      this.stockfishService
-        .getEvaluation(moveObject.after)
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
       this.i++;
+      return moveObject.after;
     }
+    return "";
   }
 
   reset() {
