@@ -1,4 +1,10 @@
-import { Input, Component, HostListener, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { Chess } from 'chess.js';
 import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
@@ -8,10 +14,11 @@ import { EvaluationBarComponent } from '../evaluation-bar/evaluation-bar.compone
 declare var ChessBoard: any;
 
 @Component({
-    selector: 'app-chess-board',
-    templateUrl: './chess-board.component.html',
-    standalone: true,
-    imports: [EvaluationBarComponent],
+  selector: 'app-chess-board',
+  templateUrl: './chess-board.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [EvaluationBarComponent],
 })
 export class ChessBoardComponent implements OnInit {
   private destroy = new Subject<void>();

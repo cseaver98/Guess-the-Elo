@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostListener,
@@ -19,16 +20,17 @@ import { NgIf } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
-    selector: 'app-play-page',
-    templateUrl: './play-page.component.html',
-    standalone: true,
-    imports: [
-        ChessBoardComponent,
-        MatSliderModule,
-        ReactiveFormsModule,
-        NgIf,
-        MatButtonModule,
-    ],
+  selector: 'app-play-page',
+  templateUrl: './play-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    ChessBoardComponent,
+    MatSliderModule,
+    ReactiveFormsModule,
+    NgIf,
+    MatButtonModule,
+  ],
 })
 export class PlayPageComponent implements OnInit {
   player: string = '';

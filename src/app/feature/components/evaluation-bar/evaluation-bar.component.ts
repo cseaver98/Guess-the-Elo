@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /**
  * @title Determinate progress-bar
@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-evaluation-bar',
   templateUrl: './evaluation-bar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class EvaluationBarComponent {
@@ -14,10 +15,11 @@ export class EvaluationBarComponent {
 
   cap: number = 5;
 
-  protected percentage: number = ((this.getPercentage(this.evaluation) + this.cap) / (this.cap * 2)) * 100;
+  protected percentage: number =
+    ((this.getPercentage(this.evaluation) + this.cap) / (this.cap * 2)) * 100;
 
   getPercentage(val: number): number {
     val = val * -1;
-    return Math.min(Math.max(val, (-1 * this.cap)), this.cap);
+    return Math.min(Math.max(val, -1 * this.cap), this.cap);
   }
 }
