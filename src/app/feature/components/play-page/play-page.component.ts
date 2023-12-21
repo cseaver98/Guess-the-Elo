@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { EvaluationBarComponent } from '../evaluation-bar/evaluation-bar.component';
+import {StockfishEvaluationApiService} from "../../../core/services/stockfish-evaluation-api.service";
 
 @Component({
   selector: 'app-play-page',
@@ -34,18 +35,20 @@ import { EvaluationBarComponent } from '../evaluation-bar/evaluation-bar.compone
   ],
 })
 export class PlayPageComponent implements OnInit {
-  player: string = '';
-  playerGamesUrl: string = '';
-  gameData?: Game;
-  eloGuess: FormControl<number | null> = new FormControl(100);
-  currentGameScore: number = 0;
-  overallScore: number = 0;
-  averageElo: number | null = null;
-  disableBar: boolean = false;
+  private player: string = '';
+  private playerGamesUrl: string = '';
+  protected gameData?: Game;
+  protected eloGuess: FormControl<number | null> = new FormControl(100);
+  private currentGameScore: number = 0;
+  private overallScore: number = 0;
+  private averageElo: number | null = null;
+  protected disableBar: boolean = false;
+
   constructor(
     private chessService: ChessWebApiService,
-    public dialog: MatDialog,
-    private evaluationBar: EvaluationBarComponent
+    private dialog: MatDialog,
+    private stockfish: StockfishEvaluationApiService,
+    private cd: ChangeDetectorRef
   ) {}
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
@@ -64,9 +67,9 @@ export class PlayPageComponent implements OnInit {
         this.move();
       }
     }
-  } 
+  }
 
-  newGame() {
+  protected newGame() {
     this.disableBar = false;
     this.getPlayer()
       .then(() => {
@@ -77,37 +80,36 @@ export class PlayPageComponent implements OnInit {
       });
   }
 
-  move() {
+  protected move() {
     let fen: string = this.chessboard.move();
-    console.log(fen)
-    this.evaluationBar.setEvaluation(fen);
+    this.stockfish.setEvaluation(fen);
   }
 
-  reset() {
+  protected reset() {
     this.chessboard.reset();
   }
 
-  flipBoard() {
+  protected flipBoard() {
     this.chessboard.flipBoard();
   }
 
-  undo() {
+  protected undo() {
     this.chessboard.undo();
   }
 
-  async getPlayer() {
+  private async getPlayer() {
     let countryCode = COUNTRY_CODES[randomNumber(0, COUNTRY_CODES.length - 1)];
     const data = await this.chessService.getPlayer(countryCode);
     let number = randomNumber(0, data.data.players.length);
     this.player = data.data.players[number];
   }
 
-  async getPlayerGamesUrl() {
+  private async getPlayerGamesUrl() {
     const data = await this.chessService.getPlayerArchives(this.player);
     this.playerGamesUrl = data.data.archives[data.data.archives.length - 1];
   }
 
-  async getPlayerGames() {
+  private async getPlayerGames() {
     const data = await this.chessService.getPlayerGames(this.playerGamesUrl);
     let currentGame = data.data.games[data.data.games.length - 1];
     this.gameData = {
@@ -128,7 +130,7 @@ export class PlayPageComponent implements OnInit {
     );
   }
 
-  pgnToArray(game: any) {
+  private pgnToArray(game: any) {
     let arr = game.moves;
     let moves = [];
     for (const move of arr) {
@@ -137,7 +139,8 @@ export class PlayPageComponent implements OnInit {
     return moves;
   }
 
-  openDialog(): void {
+  protected openDialog(): void {
+    this.disableBar = false;
     if (this.eloGuess.value != null) {
       this.currentGameScore = Math.ceil(
         (Math.min(this.eloGuess.value, this.averageElo ?? 0) /
@@ -165,9 +168,10 @@ export class PlayPageComponent implements OnInit {
         this.disableBar = true;
       }
     });
+    this.cd.markForCheck();
   }
 
-  isSlideBarFocused(): boolean {
+  private isSlideBarFocused(): boolean {
     return this.slideBar.nativeElement === document.activeElement;
   }
 }

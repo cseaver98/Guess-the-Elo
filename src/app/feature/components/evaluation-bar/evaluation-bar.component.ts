@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
+import {Subject, takeUntil} from "rxjs";
+import {NgStyle} from "@angular/common";
 
 /**
  * @title Determinate progress-bar
@@ -9,17 +11,28 @@ import { StockfishEvaluationApiService } from '../../../core/services/stockfish-
   templateUrl: './evaluation-bar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
+  imports: [
+    NgStyle
+  ]
 })
 export class EvaluationBarComponent {
-
-  constructor(private stockfishService: StockfishEvaluationApiService) {}
-
+  private unsubscribe$ = new Subject();
   private cap: number = 5;
+  protected percentage: number = 50;
 
-  protected percentage: number = 0;
+  constructor(
+    private stockfishService: StockfishEvaluationApiService,
+    private cd: ChangeDetectorRef
+  ) {
+    this.stockfishService.evaluation
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) =>{
+        this.setPercentage(data);
+        this.cd.markForCheck();
+      })
+  }
 
   setPercentage(evaluation: number) {
-    console.log(evaluation)
     this.percentage = ((this.limitPercentage(evaluation) + this.cap) / (this.cap * 2)) * 100;
   }
 
@@ -28,29 +41,8 @@ export class EvaluationBarComponent {
     return Math.min(Math.max(val, -1 * this.cap), this.cap);
   }
 
-  async setEvaluation(fen: string) {
-    console.log(fen)
-    const result = await this.stockfishService.getEvaluation(fen);
-    console.log(result)
-    const parsedResult = this.parseEvaluation(result.data.data)
-    if (parsedResult) {
-      this.setPercentage(parsedResult);
-    }
-    else {
-      this.setPercentage(0);
-    }
-  } 
-
-  parseEvaluation(result: string) {
-    const regexPattern = /-?\d+\.\d+/;
-
-    const match = result.match(regexPattern);
-
-    if (match && match.length > 0) {
-      const extractedNumber = parseFloat(match[0]);
-      return extractedNumber;
-    }
-  
-    return null;
+  ngOnDestroy() {
+    this.unsubscribe$.next(null);
+    this.unsubscribe$.complete();
   }
 }

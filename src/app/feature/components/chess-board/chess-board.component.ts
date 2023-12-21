@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Chess } from 'chess.js';
-import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
 import { Game } from '../../models/game';
 import { EvaluationBarComponent } from '../evaluation-bar/evaluation-bar.component';
 
