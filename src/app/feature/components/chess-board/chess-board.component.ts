@@ -3,12 +3,15 @@ import { Subject } from 'rxjs';
 import { Chess } from 'chess.js';
 import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
 import { Game } from '../../models/game';
+import { EvaluationBarComponent } from '../evaluation-bar/evaluation-bar.component';
 
 declare var ChessBoard: any;
 
 @Component({
-  selector: 'app-chess-board',
-  templateUrl: './chess-board.component.html',
+    selector: 'app-chess-board',
+    templateUrl: './chess-board.component.html',
+    standalone: true,
+    imports: [EvaluationBarComponent],
 })
 export class ChessBoardComponent implements OnInit {
   private destroy = new Subject<void>();

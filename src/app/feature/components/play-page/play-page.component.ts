@@ -11,13 +11,24 @@ import { COUNTRY_CODES } from '../../../core/constants/country-codes';
 import { randomNumber } from '../../../core/util/random-number';
 import { parse } from '@mliebelt/pgn-parser';
 import { Game } from '../../models/game';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PopupComponent } from '../popup/popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
+import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
-  selector: 'app-play-page',
-  templateUrl: './play-page.component.html',
+    selector: 'app-play-page',
+    templateUrl: './play-page.component.html',
+    standalone: true,
+    imports: [
+        ChessBoardComponent,
+        MatSliderModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatButtonModule,
+    ],
 })
 export class PlayPageComponent implements OnInit {
   player: string = '';

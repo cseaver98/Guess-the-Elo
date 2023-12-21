@@ -9,14 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { EvaluationBarComponent } from './components/evaluation-bar/evaluation-bar.component';
 
 @NgModule({
-  declarations: [PlayPageComponent, ChessBoardComponent],
-  imports: [
-    CommonModule,
-    FeatureRoutingModule,
-    ReactiveFormsModule,
-    MatSliderModule,
-    MatButtonModule,
-    EvaluationBarComponent,
-  ],
+    imports: [
+        CommonModule,
+        FeatureRoutingModule,
+        ReactiveFormsModule,
+        MatSliderModule,
+        MatButtonModule,
+        EvaluationBarComponent,
+        PlayPageComponent, ChessBoardComponent,
+    ],
 })
 export class FeatureModule {}
