@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
 import {Subject, takeUntil} from "rxjs";
-import {NgStyle} from "@angular/common";
+import {NgStyle, NgIf} from "@angular/common";
 
 /**
  * @title Determinate progress-bar
@@ -12,13 +12,15 @@ import {NgStyle} from "@angular/common";
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    NgIf
   ]
 })
 export class EvaluationBarComponent {
   private unsubscribe$ = new Subject();
   private cap: number = 5;
   protected percentage: number = 50;
+  protected isHovered: boolean = false;
 
   constructor(
     private stockfishService: StockfishEvaluationApiService,
@@ -39,6 +41,14 @@ export class EvaluationBarComponent {
   limitPercentage(val: number): number {
     val = val * -1;
     return Math.min(Math.max(val, -1 * this.cap), this.cap);
+  }
+
+  showValue() {
+    this.isHovered = true;
+  }
+
+  hideValue() {
+    this.isHovered = false;
   }
 
   ngOnDestroy() {

@@ -1,7 +1,13 @@
-<div class="flex flex-col bg-white h-full w-3 shadow">
+<div 
+(mouseenter)="showValue()" 
+(mouseleave)="hideValue()"
+class="flex flex-col bg-white h-full w-3 shadow">
   <div
     [ngStyle]="{'height': percentage + '%'}"
     class="w-full bg-black transition-height ease-in-out duration-500"
   >
+  </div>
+  <div *ngIf="isHovered" class="tooltip">
+    {{ percentage }}
   </div>
 </div>
