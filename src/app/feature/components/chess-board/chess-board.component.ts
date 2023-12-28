@@ -54,12 +54,19 @@ export class ChessBoardComponent implements OnInit {
     this.board.flip();
   }
 
-  undo() {
+  undo(): string {
     let moveObject = this.game.undo();
     if (moveObject) {
       this.board.position(moveObject.before, true);
       this.i--;
+      if (this.i === 0) {
+        return 'reset';
+      }
+      else {
+        return moveObject.before;
+      }
     }
+    return "";
   }
 
   setMoveList(moveList: string[]) {

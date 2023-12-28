@@ -70,7 +70,6 @@ export class PlayPageComponent implements OnInit {
 
   protected newGame() {
     this.disableBar = false;
-    this.reset();
     this.getPlayer()
       .then(() => {
         return this.getPlayerGamesUrl();
@@ -83,7 +82,7 @@ export class PlayPageComponent implements OnInit {
   protected move() {
     let fen: string = this.chessboard.move();
     this.stockfish.setEvaluation(fen);
-  }
+    }
 
   protected reset() {
     this.stockfish.resetEvaluation();
@@ -95,7 +94,13 @@ export class PlayPageComponent implements OnInit {
   }
 
   protected undo() {
-    this.chessboard.undo();
+    let fen: string = this.chessboard.undo();
+    if (fen === 'reset') {
+      this.stockfish.resetEvaluation();
+    }
+    else {
+      this.stockfish.setEvaluation(fen);
+    }
   }
 
   private async getPlayer() {
@@ -174,5 +179,10 @@ export class PlayPageComponent implements OnInit {
 
   private isSlideBarFocused(): boolean {
     return this.slideBar.nativeElement === document.activeElement;
+  }
+
+  protected newGameButton() {
+    this.reset()
+    this.newGame()
   }
 }

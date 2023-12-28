@@ -5,7 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
   providedIn: 'root',
 })
 export class StockfishEvaluationApiService {
-  private evaluation$: BehaviorSubject<number> = new BehaviorSubject(0);
+  private evaluation$: BehaviorSubject<string> = new BehaviorSubject('0');
 
   private async getEvaluation(FEN: string): Promise<any> {
     try {
@@ -28,7 +28,7 @@ export class StockfishEvaluationApiService {
       if (parsedResult) {
         this.evaluation$.next(parsedResult);
       } else {
-        this.evaluation$.next(0);
+        this.evaluation$.next('0');
       }
     }).catch(error => {
       throw 'Evaluation bar error';
@@ -37,22 +37,20 @@ export class StockfishEvaluationApiService {
 
 
   private parseEvaluation(result: string) {
-    const regexPattern = /-?\d+\.\d+/;
+    const regexPattern = /-?\d+(\.\d+)?/;
+    const match = regexPattern.exec(result)
 
-    const match = result.match(regexPattern);
-
-    if (match && match.length > 0) {
-      return parseFloat(match[0]);
+    if (match && match.length > 0 && !result.includes('mate')) {
+      return match[0];
     }
-
-    return null;
+    return result.replace('Total evaluation: ', '');
   }
 
-  get evaluation(): Observable<number> {
+  get evaluation(): Observable<string> {
     return this.evaluation$.asObservable();
   }
 
   public resetEvaluation() {
-    this.evaluation$.next(0);
+    this.evaluation$.next('0');
   }
 }

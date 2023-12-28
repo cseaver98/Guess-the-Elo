@@ -37,9 +37,21 @@ export class EvaluationBarComponent {
       })
   }
 
-  setPercentage(evaluation: number) {
-    this.evaluation =  evaluation > 0 ? '+' + evaluation.toFixed(2).toString() : this.evaluation = evaluation.toFixed(2).toString();
-    this.percentage = ((this.limitPercentage(evaluation) + this.cap) / (this.cap * 2)) * 100;
+  setPercentage(evaluation: string) {
+    let evaluationNumber = parseFloat(evaluation);
+    if (!isNaN(evaluationNumber) && isFinite(evaluationNumber)) {
+    this.evaluation =  evaluationNumber > 0 ? '+' + evaluationNumber.toFixed(2).toString() : evaluationNumber.toFixed(2).toString();
+    this.percentage = ((this.limitPercentage(evaluationNumber) + this.cap) / (this.cap * 2)) * 100;
+    }
+    else {
+      this.evaluation = evaluation;
+      if (evaluation.includes("White")) {
+        this.percentage = 0;
+      }
+      else {
+        this.percentage = 100;
+      }
+    }
   }
 
   limitPercentage(val: number): number {
