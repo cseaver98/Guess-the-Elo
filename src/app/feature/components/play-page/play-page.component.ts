@@ -70,6 +70,7 @@ export class PlayPageComponent implements OnInit {
 
   protected newGame() {
     this.disableBar = false;
+    this.reset();
     this.getPlayer()
       .then(() => {
         return this.getPlayerGamesUrl();
@@ -85,6 +86,7 @@ export class PlayPageComponent implements OnInit {
   }
 
   protected reset() {
+    this.stockfish.resetEvaluation();
     this.chessboard.reset();
   }
 

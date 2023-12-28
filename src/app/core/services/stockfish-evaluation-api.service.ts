@@ -51,4 +51,8 @@ export class StockfishEvaluationApiService {
   get evaluation(): Observable<number> {
     return this.evaluation$.asObservable();
   }
+
+  public resetEvaluation() {
+    this.evaluation$.next(0);
+  }
 }
