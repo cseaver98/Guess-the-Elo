@@ -18,7 +18,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
-import { EvaluationBarComponent } from '../evaluation-bar/evaluation-bar.component';
 import {StockfishEvaluationApiService} from "../../../core/services/stockfish-evaluation-api.service";
 
 @Component({

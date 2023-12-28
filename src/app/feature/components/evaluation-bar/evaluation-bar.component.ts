@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/co
 import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
 import {Subject, takeUntil} from "rxjs";
 import {NgStyle, NgIf} from "@angular/common";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 /**
  * @title Determinate progress-bar
@@ -13,7 +14,8 @@ import {NgStyle, NgIf} from "@angular/common";
   standalone: true,
   imports: [
     NgStyle,
-    NgIf
+    NgIf,
+    MatTooltipModule
   ]
 })
 export class EvaluationBarComponent {
@@ -21,6 +23,7 @@ export class EvaluationBarComponent {
   private cap: number = 5;
   protected percentage: number = 50;
   protected isHovered: boolean = false;
+  protected evaluation: string = '0.00';
 
   constructor(
     private stockfishService: StockfishEvaluationApiService,
@@ -35,6 +38,7 @@ export class EvaluationBarComponent {
   }
 
   setPercentage(evaluation: number) {
+    this.evaluation =  evaluation > 0 ? '+' + evaluation.toFixed(2).toString() : this.evaluation = evaluation.toFixed(2).toString();
     this.percentage = ((this.limitPercentage(evaluation) + this.cap) / (this.cap * 2)) * 100;
   }
 
