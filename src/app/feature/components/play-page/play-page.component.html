@@ -5,23 +5,21 @@
   >
     <div class="bg-gray-600 rounded-t-lg p-4">Testing</div>
     <div class="flex flex-col p-4">
-      <div class="flex justify-between">
-        <label id="white-username">{{ "White: " + gameData?.whiteUserName }}</label>
-      </div>
-      <div class="flex justify-between">
-        <label id="black-username">{{ "Black: " + gameData?.blackUserName }}</label>
-      </div>
-      <div class="flex justify-between">
-        <label id="time-class">{{ "Time Class: " + gameData?.timeClass }}</label>
-      </div>
-      <div class="flex justify-between">
-        <label id="time-control">{{ "Time Control: " + gameData?.timeControl }}</label>
-      </div>
-      <div class="flex justify-between">
-        <label id="slider-label">Elo Guess</label>
+      <label id="white-username">{{
+        'White: ' + gameData?.whiteUserName
+      }}</label>
+      <label id="black-username">{{
+        'Black: ' + gameData?.blackUserName
+      }}</label>
+      <label id="time-class">{{ 'Time Class: ' + gameData?.timeClass }}</label>
+      <label id="time-control">{{
+        'Time Control: ' + gameData?.timeControl
+      }}</label>
+      <div class="flex gap-4">
+        <label id="slider-label">Elo Guess:</label>
         <label>{{ slider.value }}</label>
       </div>
-      <div class="flex justify-between">
+      <div class="flex">
         <mat-slider
           class="flex-grow"
           [max]="3500"

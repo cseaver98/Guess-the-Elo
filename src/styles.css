@@ -1,7 +1,7 @@
-@import "tailwindcss/base";
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/base';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 /* Buttons */
 @layer utilities {

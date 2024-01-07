@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,22 +23,23 @@ export class StockfishEvaluationApiService {
   }
 
   public setEvaluation(fen: string): void {
-    this.getEvaluation(fen).then(result => {
-      const parsedResult = this.parseEvaluation(result.data.data);
-      if (parsedResult) {
-        this.evaluation$.next(parsedResult);
-      } else {
-        this.evaluation$.next('0');
-      }
-    }).catch(error => {
-      throw 'Evaluation bar error';
-    });
+    this.getEvaluation(fen)
+      .then((result) => {
+        const parsedResult = this.parseEvaluation(result.data.data);
+        if (parsedResult) {
+          this.evaluation$.next(parsedResult);
+        } else {
+          this.evaluation$.next('0');
+        }
+      })
+      .catch((error) => {
+        throw 'Evaluation bar error';
+      });
   }
-
 
   private parseEvaluation(result: string) {
     const regexPattern = /-?\d+(\.\d+)?/;
-    const match = regexPattern.exec(result)
+    const match = regexPattern.exec(result);
 
     if (match && match.length > 0 && !result.includes('mate')) {
       return match[0];

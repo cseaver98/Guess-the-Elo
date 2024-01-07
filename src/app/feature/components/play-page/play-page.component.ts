@@ -1,5 +1,6 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -18,7 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
-import {StockfishEvaluationApiService} from "../../../core/services/stockfish-evaluation-api.service";
+import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
 
 @Component({
   selector: 'app-play-page',
@@ -47,7 +48,7 @@ export class PlayPageComponent implements OnInit {
     private chessService: ChessWebApiService,
     private dialog: MatDialog,
     private stockfish: StockfishEvaluationApiService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {}
 
   @ViewChild(ChessBoardComponent) chessboard!: ChessBoardComponent;
@@ -77,12 +78,13 @@ export class PlayPageComponent implements OnInit {
       .then(() => {
         return this.getPlayerGames();
       });
+    this.cd.markForCheck();
   }
 
   protected move() {
     let fen: string = this.chessboard.move();
     this.stockfish.setEvaluation(fen);
-    }
+  }
 
   protected reset() {
     this.stockfish.resetEvaluation();
@@ -97,8 +99,7 @@ export class PlayPageComponent implements OnInit {
     let fen: string = this.chessboard.undo();
     if (fen === 'reset') {
       this.stockfish.resetEvaluation();
-    }
-    else {
+    } else {
       this.stockfish.setEvaluation(fen);
     }
   }
@@ -182,7 +183,7 @@ export class PlayPageComponent implements OnInit {
   }
 
   protected newGameButton() {
-    this.reset()
-    this.newGame()
+    this.reset();
+    this.newGame();
   }
 }

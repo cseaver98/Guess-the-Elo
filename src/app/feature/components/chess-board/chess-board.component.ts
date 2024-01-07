@@ -41,7 +41,7 @@ export class ChessBoardComponent implements OnInit {
       this.i++;
       return moveObject.after;
     }
-    return "";
+    return '';
   }
 
   reset() {
@@ -61,12 +61,11 @@ export class ChessBoardComponent implements OnInit {
       this.i--;
       if (this.i === 0) {
         return 'reset';
-      }
-      else {
+      } else {
         return moveObject.before;
       }
     }
-    return "";
+    return '';
   }
 
   setMoveList(moveList: string[]) {
