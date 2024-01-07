@@ -10,7 +10,7 @@
         <li
           *ngFor="let move of gameData.moveList; index as i"
           class="flex justify-start py-2"
-          [ngClass]="{ 'bg-chess-gray-800' : i % 2 !== 0 }"
+          [ngClass]="{ 'bg-chess-gray-800': i % 2 !== 0 }"
         >
           <div class="w-1/6">
             {{ i + '.' }}
