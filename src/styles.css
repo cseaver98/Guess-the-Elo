@@ -16,6 +16,9 @@
   .transparent-buttons {
     @apply rounded hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50;
   }
+  .move-list-button {
+    @apply p-2 hover:text-white hover:font-bold;
+  }
 }
 
 /* */

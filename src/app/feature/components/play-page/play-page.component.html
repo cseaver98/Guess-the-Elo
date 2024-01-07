@@ -5,24 +5,32 @@
   >
     <div class="bg-gray-600 rounded-t-lg p-4">Testing</div>
     <div class="px-4">Move List</div>
-    <div class="mx-4 p-2 overflow-auto">
-      <ol *ngIf="gameData && gameData.moveList">
-        <li
-          *ngFor="let move of gameData.moveList; index as i"
-          class="flex justify-start py-2"
-          [ngClass]="{ 'bg-chess-gray-800': i % 2 !== 0 }"
-        >
-          <div class="w-1/6">
-            {{ i + '.' }}
-          </div>
-          <div class="w-1/6">
-            {{ move }}
-          </div>
-          <div class="w-1/6">
-            {{ gameData.moveList[i + 1] }}
-          </div>
-        </li>
-      </ol>
+    <div class="flex-grow mx-4 p-2 overflow-auto">
+      <cdk-virtual-scroll-viewport itemSize="48" class="h-full w-full">
+        <ol *ngIf="gameData && gameData.moveList">
+          <li
+            *ngFor="let move of gameData.moveList; index as i"
+            class="flex justify-start"
+            [ngClass]="{ 'bg-chess-gray-800': i % 2 !== 0 }"
+          >
+            <div class="w-1/6">
+              <button class="move-list-button">
+                {{ i + '.' }}
+              </button>
+            </div>
+            <div class="w-1/6">
+              <button class="move-list-button">
+                {{ move }}
+              </button>
+            </div>
+            <div class="w-1/6">
+              <button class="move-list-button">
+                {{ gameData.moveList[i + 1] }}
+              </button>
+            </div>
+          </li>
+        </ol>
+      </cdk-virtual-scroll-viewport>
     </div>
     <div class="flex flex-col p-4">
       <label id="white-username">{{
@@ -50,22 +58,12 @@
           <input matSliderThumb [formControl]="eloGuess" #slider />
         </mat-slider>
         <button
-          *ngIf="!disableBar"
           mat-button
           class="reset-button-colors buttons w-24 h-12"
           [disabled]="!eloGuess.valid"
-          (click)="openDialog()"
+          (click)="disableBar ? newGame() : openDialog()"
         >
-          Submit
-        </button>
-        <button
-          *ngIf="disableBar"
-          mat-button
-          class="reset-button-colors buttons w-24 h-12"
-          [disabled]="!eloGuess.valid"
-          (click)="newGame()"
-        >
-          New Game
+          {{ disableBar ? 'New Game' : 'Submit' }}
         </button>
       </div>
     </div>

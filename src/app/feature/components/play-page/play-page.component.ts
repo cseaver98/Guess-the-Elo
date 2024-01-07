@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
+import { CdkFixedSizeVirtualScroll, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-play-page',
@@ -32,7 +33,9 @@ import { StockfishEvaluationApiService } from '../../../core/services/stockfish-
     MatSliderModule,
     ReactiveFormsModule,
     MatButtonModule,
-  ],
+    CdkVirtualScrollViewport,
+    CdkFixedSizeVirtualScroll
+  ]
 })
 export class PlayPageComponent implements OnInit {
   private player: string = '';
