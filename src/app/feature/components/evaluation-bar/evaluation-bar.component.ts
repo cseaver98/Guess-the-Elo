@@ -22,7 +22,6 @@ export class EvaluationBarComponent {
   private unsubscribe$ = new Subject();
   private cap: number = 5;
   protected percentage: number = 50;
-  protected isHovered: boolean = false;
   protected evaluation: string = '0.00';
 
   constructor(
@@ -48,7 +47,7 @@ export class EvaluationBarComponent {
       if (evaluation.includes("White")) {
         this.percentage = 0;
       }
-      else {
+      else if (this.evaluation.includes("Black")) {
         this.percentage = 100;
       }
     }
@@ -57,14 +56,6 @@ export class EvaluationBarComponent {
   limitPercentage(val: number): number {
     val = val * -1;
     return Math.min(Math.max(val, -1 * this.cap), this.cap);
-  }
-
-  showValue() {
-    this.isHovered = true;
-  }
-
-  hideValue() {
-    this.isHovered = false;
   }
 
   ngOnDestroy() {
