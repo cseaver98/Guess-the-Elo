@@ -1,9 +1,29 @@
 <div class="flex relative m-3 gap-3 justify-between">
   <app-chess-board [gameData]="gameData"></app-chess-board>
   <div
-    class="flex flex-col w-full rounded-lg bg-gray-400 gap-4 justify-between border border-black"
+    class="flex flex-col w-full rounded-lg bg-chess-gray-900 gap-4 justify-between border border-black"
   >
     <div class="bg-gray-600 rounded-t-lg p-4">Testing</div>
+    <div class="px-4">Move List</div>
+    <div class="mx-4 p-2 overflow-auto">
+      <ol *ngIf="gameData && gameData.moveList">
+        <li
+          *ngFor="let move of gameData.moveList; index as i"
+          class="flex justify-start py-2"
+          [ngClass]="{ 'bg-chess-gray-800' : i % 2 !== 0 }"
+        >
+          <div class="w-1/6">
+            {{ i + '.' }}
+          </div>
+          <div class="w-1/6">
+            {{ move }}
+          </div>
+          <div class="w-1/6">
+            {{ gameData.moveList[i + 1] }}
+          </div>
+        </li>
+      </ol>
+    </div>
     <div class="flex flex-col p-4">
       <label id="white-username">{{
         'White: ' + gameData?.whiteUserName

@@ -17,7 +17,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PopupComponent } from '../popup/popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { StockfishEvaluationApiService } from '../../../core/services/stockfish-evaluation-api.service';
 
@@ -27,10 +27,10 @@ import { StockfishEvaluationApiService } from '../../../core/services/stockfish-
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    CommonModule,
     ChessBoardComponent,
     MatSliderModule,
     ReactiveFormsModule,
-    NgIf,
     MatButtonModule,
   ],
 })
