@@ -17,3 +17,10 @@
     @apply rounded hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50;
   }
 }
+
+/* */
+@layer utilities {
+  .bg-bongcloud {
+    @apply bg-[url('./assets/bongcloud.png')];
+  }
+}

@@ -20,7 +20,6 @@ declare var ChessBoard: any;
   imports: [EvaluationBarComponent],
 })
 export class ChessBoardComponent implements OnInit {
-  private destroy = new Subject<void>();
   board: any;
   game = new Chess();
   moveList: string[] = [];
@@ -92,28 +91,5 @@ export class ChessBoardComponent implements OnInit {
   @HostListener('window:resize')
   onResize() {
     this.componentWidth = 400;
-  }
-
-  get resized() {
-    return `w-[${this.componentWidth}px]`;
-  }
-
-  private calculateWidth(): number {
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const minSize = 300;
-    const maxSize = 1100;
-
-    return (
-      Math.max(
-        minSize,
-        Math.min(maxSize, Math.min(windowWidth, windowHeight) - 50),
-      ) - 25
-    );
-  }
-
-  ngOnDestroy() {
-    this.destroy.next();
-    this.destroy.complete();
   }
 }

@@ -78,7 +78,6 @@ export class PlayPageComponent implements OnInit {
       .then(() => {
         return this.getPlayerGames();
       });
-    this.cd.markForCheck();
   }
 
   protected move() {

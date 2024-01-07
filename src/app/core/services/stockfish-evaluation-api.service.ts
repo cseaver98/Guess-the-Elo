@@ -33,7 +33,7 @@ export class StockfishEvaluationApiService {
         }
       })
       .catch((error) => {
-        throw 'Evaluation bar error';
+        throw `Evaluation bar error: ${error}`;
       });
   }
 
